@@ -63,3 +63,15 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     });
     event.preventDefault();
 });
+
+
+const hubConnection = new HubConnection(`http://localhost:6123/hubs/Values`, {
+    transport: TransportType.WebSockets
+});
+hubConnection.on("Add", (value: string) => {
+    this.values.push(value);
+});
+hubConnection.on("Delete", (value: string) => {
+    this.values.remove(value);
+})
+hubConnection.start();
